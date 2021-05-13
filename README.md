@@ -5,7 +5,7 @@ The Backend for the Crypto Tracker
 
 ### `npm start`
 
-Runs the server in the development mode on [http://localhost:3001](http://localhost:3001)
+Runs the server on [http://localhost:3001](http://localhost:3001)
 
 ## External APIs
 [Coin Market Cap](https://coinmarketcap.com/api/)
