@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/cryto-tracker/crypto-tracker-backend/issues"
   },
-  "homepage": "https://github.com/cryto-tracker/crypto-tracker-backend#readme"
+  "homepage": "https://github.com/cryto-tracker/crypto-tracker-backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "superagent": "^6.1.0"
+  }
 }
