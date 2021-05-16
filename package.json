@@ -4,7 +4,8 @@
   "description": "The Backend for The Crypto-Tracker App",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:open": "./node_modules/.bin/cypress open",
+    "test:run": "./node_modules/.bin/cypress run --headless --browser=chrome"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,11 @@
     "cors": "^2.8.5",
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
+    "rss-to-json": "^1.1.3",
     "superagent": "^6.1.0"
+  },
+  "devDependencies": {
+    "cypress": "^7.3.0",
+    "eslint-plugin-cypress": "^2.11.2"
   }
 }

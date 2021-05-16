@@ -248,3 +248,7 @@ $RECYCLE.BIN/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Cypress screenshots / videos
+cypress/videos
+cypress/screenshots
