@@ -39,7 +39,6 @@ function parseCoins(coinData) {
   }
 }
 
-
 function Coin(info) {
   this.id = info.id;
   this.name = info.name;

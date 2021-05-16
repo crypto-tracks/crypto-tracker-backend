@@ -7,9 +7,9 @@ const cmcHeaders = require('../constants/cmc-headers');
 
 const getCoinLatest = async(req, res, next) => {
   try {
-    const key = `coin-price-latest`;
+    const key = 'coin-price-latest';
     const url = `${process.env.COIN_MARKET_CAP_API_URL}/cryptocurrency/listings/latest?limit=5000`
-    console.log(url);
+    // console.log(url);
     // Cache results for 5 minutes
     if (cache[key] && (Date.now() - cache[key].timestamp < 300000)) { 
       console.log('Cache hit');
@@ -34,7 +34,7 @@ function coinFinder(coins, symbol) {
   try {
     // console.log('coinFinder', coins)
     const coinReturn = coins.filter(item => item.symbol === symbol);
-    console.log(coinReturn);
+    // console.log(coinReturn);
     return Promise.resolve(coinReturn);
   } catch(e) {
     return Promise.reject(e);
@@ -78,4 +78,3 @@ function CoinLatest(coin) {
 }
 
 module.exports = getCoinLatest;
-
