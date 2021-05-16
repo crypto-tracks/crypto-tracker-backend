@@ -7,6 +7,7 @@ const errorHandler = require('./handlers/error');
 const getCoins = require('./handlers/coins');
 const getCoinInfo = require('./handlers/coin-info');
 const getCoinLatest = require('./handlers/coin-latest');
+const getNews = require('./handlers/news');
 
 const app = express();
 app.use(express.json());
@@ -32,7 +33,8 @@ app.get('/coin-info', getCoinInfo);
 // Get Specific Coin Price
 app.get('/coin-latest', getCoinLatest);
 
-// TODO: Get News
+// Get News
+app.get('/news', getNews);
 
 // Listen on Port
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
