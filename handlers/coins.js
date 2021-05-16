@@ -2,21 +2,23 @@
 
 const superagent = require('superagent');
 
-let cache = require('./cache.js');
+let cache = require('./cache');
+const cmcHeaders = require('../constants/cmc-headers');
 
 const getCoins = async(req, res, next) => {
   try{
     const key = 'available-coins';
     const url = `${process.env.COIN_MARKET_CAP_API_URL}/cryptocurrency/map`;
     // Cache results for 1 day
-    console.log(url);
     if (cache[key] && (Date.now() - cache[key].timestamp < 86400000)) { 
       console.log('Cache hit');
     } else {
       console.log('Cache miss');
       cache[key] = {};
       cache[key].timestamp = Date.now();
-      let response = await superagent.get(url).set('X-CMC_PRO_API_KEY', `${process.env.COIN_MARKET_CAP_API_KEY}`);
+      let response = await superagent
+        .get(url)
+        .set(cmcHeaders);
       let parsed = await parseCoins(response);
       cache[key].data = parsed;
     }
@@ -39,10 +41,12 @@ function parseCoins(coinData) {
 
 
 function Coin(info) {
+  this.id = info.id;
   this.name = info.name;
   this.symbol = info.symbol;
   this.rank = info.rank;
-  this.is_active = info.is_active;
+  this.isActive = info.is_active;
+  this.searchTerms = [info.name, info.symbol]
 };
 
 module.exports = getCoins;
