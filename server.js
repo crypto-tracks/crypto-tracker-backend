@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const errorHandler = require('./handlers/error');
 const getCoins = require('./handlers/coins');
+const getCoinInfo = require('./handlers/coin-info');
 
 const app = express();
 app.use(express.json());
@@ -24,7 +25,8 @@ app.get('/', (req, res) => {
 // Get Available Coins
 app.get('/coins', getCoins);
 
-// TODO: Get Specific Coin Price
+// Get Coin Info
+app.get('/coin-info', getCoinInfo);
 
 // TODO: Get News
 
