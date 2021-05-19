@@ -9,7 +9,20 @@ const getCoinInfo = require('./handlers/coin-info');
 const getCoinLatest = require('./handlers/coin-latest');
 const getNews = require('./handlers/news');
 
-mongoose.connect(`${MONGODB_URI}`, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/crypto-tracks', { useNewUrlParser: true, useUnifiedTopology: true });
+
+const User = require('./models/User');
+
+const tylerUser = new User({
+  userEmail: 'tyler@csdconsultants.us',
+  userName: 'tyler',
+  userCoin: []
+})
+
+tylerUser.save(function (err) {
+    if (err) console.log(err);
+    else console.log('saved the user');
+  });
 
 const app = express();
 app.use(express.json());
@@ -38,6 +51,7 @@ app.get('/coin-latest', getCoinLatest);
 // Get News
 app.get('/news', getNews);
 
+//
 app.post('/user-coins', (req, res) => {
   User.find({ email: req.body.email }, (err, databaseResults) => {
     if (databaseResults.length < 1) {
@@ -45,17 +59,41 @@ app.post('/user-coins', (req, res) => {
     } else {
       let user = databaseResults[0];
       req.body.userCoins.forEach(item => {
-        //below if/else is from best books, rewrite for crypto tracker? Or not necessary?
-        if (typeof (item.name) === 'string' && typeof (item.description) === 'string' && typeof (item.status) === 'boolean') {
-          user.userCoins.push(item);
-        } else {
-          console.log('invalid entry');
-        }
+        user.userCoins.push(item);
       });
       user.save().then((databaseResults) => {
         res.send(databaseResults.userCoins);
       });
     }
+  });
+});
+
+app.put('/user-coins/:id', (req, res) => {
+  User.find({ email: req.body.email }, (err, databaseResults) => {
+    let user = databaseResults[0];
+    let coinId = req.params.id;
+    user.userCoins.forEach((coin, index) => {
+      if (coin._id.toString() === coinId) {
+        coin.symbol = req.body.coin[0].symbol;
+        coin.trackedAttributes = req.body.coin[0].trackedAttributes;
+      }
+    });
+    user.save().then(userData => {
+      console.log(userData);
+      res.send(userData.books);
+    });
+  });
+});
+
+app.delete('/user-coins/:id', (req, res) => {
+  console.log('delete called');
+  let email = req.query.email;
+  User.find({ email: email }, (err, userData) => {
+    let user = userData[0];
+    user.userCoins = user.userCoins.filter(coin => coin._id.toString() !== req.params.id);
+    user.save().then(userData => {
+      res.send(userData.userCoins)
+    });
   });
 });
 
