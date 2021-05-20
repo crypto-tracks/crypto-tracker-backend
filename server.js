@@ -57,7 +57,7 @@ app.get('/coin-latest', getCoinLatest);
 app.get('/news', getNews);
 
 // Get User Coins
-app.get('/tracked/read', getUserCoins);
+app.get('/tracked/read/:email', getUserCoins);
 
 // Add Coin & User
 app.post('/tracked/update', saveUserCoin);
