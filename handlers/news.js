@@ -38,7 +38,7 @@ function parseNews(news) {
     const latestNews = news.map(story => {
       return new News(story);
     });
-    return Promise.resolve(latestNews);
+    return Promise.resolve(latestNews.sort((a, b) => b.published_unix - a.published_unix));
   } catch (e) {
     return Promise.reject(e);
   }
@@ -50,6 +50,7 @@ function News(story) {
   // this.description = getGroup(/<a[^>]*>(.*?)<\/a>/g, story.description, 1);
   this.url = story.url;
   this.link = story.link;
+  this.published_unix = story.published;
   this.published = new Date(story.published).toISOString();
   this.created = new Date(story.created).toISOString();
 };
