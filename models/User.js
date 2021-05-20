@@ -3,9 +3,8 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  userName: {type: 'String', required:true},
-  userEmail: {type: 'String', required:true},
-  userCoins: {type: 'Array'}
+  email: {type: 'String', required:true},
+  coins: {type: ['String']}
 });
 
 module.exports = mongoose.model('user', userSchema);

@@ -5,28 +5,33 @@ require('dotenv').config();
 
 const errorHandler = require('./handlers/error');
 const getCoins = require('./handlers/coins');
-const getCoinInfo = require('./handlers/coin-info');
 const getCoinLatest = require('./handlers/coin-latest');
 const getNews = require('./handlers/news');
+const { deleteUserCoin, saveUserCoin, getUserCoins } = require('./handlers/user');
+// const getCoinInfo = require('./handlers/coin-info');
 
-mongoose.connect('mongodb://localhost:27017/crypto-tracks', { useNewUrlParser: true, useUnifiedTopology: true });
+// Global Variables
+const PORT = process.env.PORT || 3001;
+const MONGO_DB_URL = process.env.MONGO_DB_URL || 'mongodb://localhost:27017/crypto-tracks';
 
-const User = require('./models/User');
+mongoose.connect(`${MONGO_DB_URL}`, { useNewUrlParser: true, useUnifiedTopology: true });
 
-const tylerUser = new User({
-  userEmail: 'tyler@csdconsultants.us',
-  userName: 'tyler',
-  userCoin: []
-})
+// // TESTING THINGS
+// const UserModel = require('./models/User');
 
-tylerUser.save(function (err) {
-    if (err) console.log(err);
-    else console.log('saved the user');
-  });
+// // Temp User for Testing
+// const tempUser = new User({
+//   email: 'test.0000@mailinator.com',
+//   coins: []
+// });
+
+// tempUser.save(function (err) {
+//   if (err) console.log(err);
+//   else console.log('saved the user');
+// });
 
 const app = express();
 app.use(express.json());
-const PORT = process.env.PORT || 3001;
 
 // Cors Fix
 app.use(cors());
@@ -42,8 +47,8 @@ app.get('/', (req, res) => {
 // Get Available Coins
 app.get('/coins', getCoins);
 
-// Get Coin Info
-app.get('/coin-info', getCoinInfo);
+// Get Coin Info - REMOVED DUE TO API LIMITS
+// app.get('/coin-info', getCoinInfo);
 
 // Get Specific Coin Price
 app.get('/coin-latest', getCoinLatest);
@@ -51,51 +56,14 @@ app.get('/coin-latest', getCoinLatest);
 // Get News
 app.get('/news', getNews);
 
-//
-app.post('/user-coins', (req, res) => {
-  User.find({ email: req.body.email }, (err, databaseResults) => {
-    if (databaseResults.length < 1) {
-      res.status(400).send('error: user does not exist');
-    } else {
-      let user = databaseResults[0];
-      req.body.userCoins.forEach(item => {
-        user.userCoins.push(item);
-      });
-      user.save().then((databaseResults) => {
-        res.send(databaseResults.userCoins);
-      });
-    }
-  });
-});
+// Get User Coins
+app.get('/tracked/read', getUserCoins);
 
-app.put('/user-coins/:id', (req, res) => {
-  User.find({ email: req.body.email }, (err, databaseResults) => {
-    let user = databaseResults[0];
-    let coinId = req.params.id;
-    user.userCoins.forEach((coin, index) => {
-      if (coin._id.toString() === coinId) {
-        coin.symbol = req.body.coin[0].symbol;
-        coin.trackedAttributes = req.body.coin[0].trackedAttributes;
-      }
-    });
-    user.save().then(userData => {
-      console.log(userData);
-      res.send(userData.books);
-    });
-  });
-});
+// Add Coin & User
+app.post('/tracked/update', saveUserCoin);
 
-app.delete('/user-coins/:id', (req, res) => {
-  console.log('delete called');
-  let email = req.query.email;
-  User.find({ email: email }, (err, userData) => {
-    let user = userData[0];
-    user.userCoins = user.userCoins.filter(coin => coin._id.toString() !== req.params.id);
-    user.save().then(userData => {
-      res.send(userData.userCoins)
-    });
-  });
-});
+// Delete Coin from User
+app.delete('/tracked/delete', deleteUserCoin);
 
 // Listen on Port
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
