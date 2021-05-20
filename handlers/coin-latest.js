@@ -9,7 +9,6 @@ const getCoinLatest = async(req, res, next) => {
   try {
     const key = 'coin-price-latest';
     const url = `${process.env.COIN_MARKET_CAP_API_URL}/cryptocurrency/listings/latest?limit=5000`
-    // console.log(url);
     // Cache results for 5 minutes
     if (cache[key] && (Date.now() - cache[key].timestamp < 300000)) { 
       console.log('Cache hit');
