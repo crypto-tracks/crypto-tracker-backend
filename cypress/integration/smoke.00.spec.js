@@ -26,7 +26,7 @@ describe('/news', () => {
   });
 });
 
-describe('/coin-info', () => {
+describe.skip('/coin-info', () => {
   it('returns JSON', () => {
     cy.request('/coin-info?symbol=XRP')
       .its('headers')
