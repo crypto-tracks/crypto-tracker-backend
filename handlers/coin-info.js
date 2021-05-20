@@ -19,8 +19,6 @@ const getCoinInfo = async (req, res, next) => {
       let response = await superagent
         .get(url)
         .set(cmcHeaders);
-      // console.log(response)
-      // console.log(response.body.data[`${req.query.id}`]);
       let parsed = await parseInfo(response.body.data[`${req.query.symbol}`]);
       cache[key].data = parsed;
     }

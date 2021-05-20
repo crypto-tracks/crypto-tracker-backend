@@ -8,7 +8,6 @@ const getNews = async(req, res, next) => {
   try {
     const key = 'news-latest-' + req.query.q
     const url = `https://news.google.com/news?q=${req.query.q}&output=rss`
-    // console.log(url);
     // Cache results for 15 minutes
     if (cache[key] && (Date.now() - cache[key].timestamp < 900000)) { 
       console.log('Cache hit');
@@ -26,12 +25,6 @@ const getNews = async(req, res, next) => {
   }
 }
 
-// // Helper Function to get second group
-// // https://stackoverflow.com/a/432503/7967484
-// function getGroup(regexp, str, group) {
-//   return Array.from(str.matchAll(regexp), m => m[group]);
-// }
-
 function parseNews(news) {
   try {
     // console.log(jsonNews);
@@ -47,7 +40,6 @@ function parseNews(news) {
 function News(story) {
   this.id = story.id;
   this.title = story.title;
-  // this.description = getGroup(/<a[^>]*>(.*?)<\/a>/g, story.description, 1);
   this.url = story.url;
   this.link = story.link;
   this.published_unix = story.published;
