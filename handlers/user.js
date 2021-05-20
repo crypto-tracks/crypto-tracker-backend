@@ -4,11 +4,11 @@ const UserModel = require('../models/User');
 
 const getUserCoins = async(req, res, next) => {
   try {
-    const user = await UserModel.find({ email: req.body.email });
+    const user = await UserModel.find({ email: req.params.email });
     if (!user.length) {
       // console.log('User Not Found');
       const newUser = await new UserModel({
-        email: req.body.email,
+        email: req.params.email,
         coins: []
       }).save();
       res.json(newUser);
