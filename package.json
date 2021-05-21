@@ -1,0 +1,32 @@
+{
+  "name": "crypto-tracker-backend",
+  "version": "1.0.0",
+  "description": "The Backend for The Crypto-Tracker App",
+  "main": "index.js",
+  "scripts": {
+    "test:open": "./node_modules/.bin/cypress open",
+    "test:run": "./node_modules/.bin/cypress run --headless --browser=chrome"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cryto-tracker/crypto-tracker-backend.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cryto-tracker/crypto-tracker-backend/issues"
+  },
+  "homepage": "https://github.com/cryto-tracker/crypto-tracker-backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.9",
+    "rss-to-json": "^1.1.3",
+    "superagent": "^6.1.0"
+  },
+  "devDependencies": {
+    "cypress": "^7.3.0",
+    "eslint-plugin-cypress": "^2.11.2"
+  }
+}
