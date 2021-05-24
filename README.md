@@ -7,6 +7,12 @@ The Backend for the Crypto Tracker
 
 Runs the server on [http://localhost:3001](http://localhost:3001)
 
+## Testing Locally
+
+1. Run the server with `npm start`
+
+2. Run Cypress with `npm run test:open`
+
 ## External APIs
 
 [Coin Market Cap](https://coinmarketcap.com/api/)
