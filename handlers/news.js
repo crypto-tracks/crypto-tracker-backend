@@ -7,7 +7,7 @@ let cache = require('./cache');
 const getNews = async(req, res, next) => {
   try {
     const key = 'news-latest-' + req.query.q
-    const url = `https://news.google.com/news?q=${req.query.q}&output=rss`
+    const url = `https://news.google.com/news?q="${req.query.q}"&output=rss`
     // Cache results for 15 minutes
     if (cache[key] && (Date.now() - cache[key].timestamp < 900000)) { 
       console.log('Cache hit');
