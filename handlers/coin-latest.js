@@ -34,25 +34,31 @@ function coinFinder(coins, symbol) {
     // console.log('coinFinder', coins)
     const coinReturn = coins.filter(item => item.symbol === symbol);
     // console.log(coinReturn);
+    // why would you do this with promises? to make your try/catch work in the other code?
+    // you could do that by throwing an exception instead, which would be more standard.
     return Promise.resolve(coinReturn);
   } catch(e) {
     return Promise.reject(e);
   }
 }
 
-// Parse all coins to 
+// Parse all coins to (to what?)
 function parseLatest(coins) {
   try {
     // console.log('parseLatest', coins)
     const coinPriceLatest = coins.map(coin => {
       return new CoinLatest(coin);
     });
+    // again with the promises instead of 
     return Promise.resolve(coinPriceLatest);
   } catch (e) {
     return Promise.reject(e);
   }
 }
 
+// It's pretty odd that you have three different versions of this constructor, with different subsets of the data.
+// I'd think you could have a single constructor, with all the data, and then only pass in the data you wanted to save,
+// or inside the constructor, conditionally make good choices about what data to save.
 function CoinLatest(coin) {
   this.id = coin.id;
   this.name = coin.name;

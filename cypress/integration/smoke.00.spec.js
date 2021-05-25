@@ -35,6 +35,7 @@ describe.skip('/coin-info', () => {
   });
 });
 
+// sweet to include tests, but all you care about is its content-type?
 describe('/coin-latest', () => {
   it('returns JSON', () => {
     cy.request('/coin-latest?symbol=LTC')

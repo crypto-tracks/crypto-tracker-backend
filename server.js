@@ -16,20 +16,6 @@ const MONGO_DB_URL = process.env.MONGO_DB_URL || 'mongodb://localhost:27017/cryp
 
 mongoose.connect(`${MONGO_DB_URL}`, { useNewUrlParser: true, useUnifiedTopology: true });
 
-// // TESTING THINGS
-// const UserModel = require('./models/User');
-
-// // Temp User for Testing
-// const tempUser = new User({
-//   email: 'test.0000@mailinator.com',
-//   coins: []
-// });
-
-// tempUser.save(function (err) {
-//   if (err) console.log(err);
-//   else console.log('saved the user');
-// });
-
 const app = express();
 app.use(express.json());
 

@@ -1,5 +1,6 @@
 'use strict';
 
+// this is lovely.
 module.exports = {
   "X-CMC_PRO_API_KEY": `${process.env.COIN_MARKET_CAP_API_KEY}`,
   'Accept': 'application/json',
