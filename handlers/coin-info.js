@@ -10,6 +10,7 @@ const getCoinInfo = async (req, res, next) => {
     const key = `coin-info-${req.query.symbol}`;
     const url = `${process.env.COIN_MARKET_CAP_API_URL}/cryptocurrency/info?symbol=${req.query.symbol}`;
     // Cache results for 1 week
+    // tiny preference: I'd rather have 1000 * 60 * 60 * 24 * 7 than this number, as it shows a bit more of where it comes from.
     if (cache[key] && Date.now() - cache[key].timestamp < 604800000) {
       console.log('Cache hit');
     } else {
